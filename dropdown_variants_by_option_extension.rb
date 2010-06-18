@@ -19,5 +19,8 @@ class DropdownVariantsByOptionExtension < Spree::Extension
     # Order product option_types association by position
     Product.send(:include, Spree::DropdownVariantsByOption::Product)
 
+    # Add helper to construct options for variant dropdown
+    ProductsHelper.send(:include, Spree::DropdownVariantsByOption::ProductsHelper)
+
   end
 end

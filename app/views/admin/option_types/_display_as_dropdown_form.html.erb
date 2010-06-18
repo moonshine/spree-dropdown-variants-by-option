@@ -3,3 +3,8 @@
   <%= f.check_box :display_as_dropdown, {}, true, false %>
   <%= f.error_message_on :display_as_dropdown %>
 <% end %>
+<% f.field_container :name do %>
+  <%= f.label :redirect_on_select, t("redirect_on_select") %><br />
+  <%= f.check_box :redirect_on_select, {}, true, false %>
+  <%= f.error_message_on :redirect_on_select %>
+<% end %>

@@ -2,3 +2,4 @@
 en:
   display_as_dropdown: "Display as a drop down selection"
   drag_to_reorder: "Drag to reorder"
+  redirect_on_select: "Redirect when selection changed"
