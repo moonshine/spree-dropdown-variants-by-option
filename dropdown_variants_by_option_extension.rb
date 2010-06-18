@@ -13,6 +13,11 @@ class DropdownVariantsByOptionExtension < Spree::Extension
   # end
   
   def activate
+    # Override spree admin products controller to allow option types ordering
+    Admin::ProductsController.send(:include, Spree::DropdownVariantsByOption::Admin::ProductsController)
+
+    # Order product option_types association by position
+    Product.send(:include, Spree::DropdownVariantsByOption::Product)
 
   end
 end

@@ -1,0 +1,70 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+
+<div id="selected-options">
+
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Option Types"} %>
+
+
+  <table class="index">
+  	<thead>
+      <tr>
+        <th><%= t("name") %></th>
+        <th><%= t("presentation") %></th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+  	<tbody id="option_types">
+      <% @option_types.each do |option_type| %>
+        <tr class="option_type" id="option_type_<%= option_type.id -%>">
+          <td><%= option_type.name %></td>
+          <td><%= option_type.presentation %></td>
+          <td class="actions">
+            <%=  image_tag('ordering.png', :title => t('drag_to_reorder'), :alt => t('drag_to_reorder')) %>
+            &nbsp;&nbsp;&nbsp;
+            <%= link_to_with_icon 'delete',  t("remove"), remove_admin_product_option_type_url(@product, option_type) %>
+          </td>
+        </tr>
+      <% end %>
+      <% if @option_types.empty? %>
+       <tr><td colspan="3"><%= t(:none) %></td></tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= image_tag "spinner.gif", :style => "display:none", :id => 'busy_indicator' %>
+  <div id="option-types"></div>
+  <% if @product.variants.empty? %>
+    <span id="new_opt_link">
+      <%= link_to_remote icon('add') + ' ' + t("add_option_type"), 
+                         {:url => available_admin_product_option_types_url(@product),
+                         :method => :get,
+                         :update => "option-types"}, :class => 'iconlink' %>
+    </span>
+  <% end -%>
+</div>
+
+
+<% javascript_tag do %>
+
+  // Function will allow user to reorder option types for a product
+  $('#option_types').sortable(
+    {
+      axis: 'y',
+      dropOnEmpty:false,
+      cursor: 'crosshair',
+      items: 'tr',
+      opacity: 0.4,
+      scroll: true,
+      update: function(){
+        $.ajax({
+            type: 'post',
+            data: $('#option_types').sortable('serialize') + '&id=<%=@product.id-%>',
+            dataType: 'script',
+            complete: function(request){
+                $('#option_types').effect('highlight');
+              },
+            url: '/admin/products/reorder_product_option_types'})
+        }
+      })
+
+<% end %>

@@ -1,0 +1,5 @@
+<% f.field_container :name do %>
+  <%= f.label :display_as_dropdown, t("display_as_dropdown") %><br />
+  <%= f.check_box :display_as_dropdown, {}, true, false %>
+  <%= f.error_message_on :display_as_dropdown %>
+<% end %>
