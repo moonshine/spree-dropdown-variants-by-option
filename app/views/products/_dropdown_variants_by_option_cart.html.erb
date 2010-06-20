@@ -18,12 +18,24 @@
           <% @product.option_types.each do |option_type|
             if option_type.display_as_dropdown
           %>
-            <li>
-              <%= option_type.presentation %><br/>
-              <%= select_tag "option_types[#{option_type.id}]", options_from_collection_for_select(instock_option_values(@product, option_type), :id, :presentation) %>
-            </li>
+              <li>
+                <%= option_type.presentation %><br/>
+                <%= select_tag "option_types[#{option_type.id}]", options_from_collection_for_select(instock_option_values(@product, option_type), :id, :presentation) %>
+              </li>
             <% else %>
-            <% end%>
+              <li>
+                <%= option_type.presentation %><br/>
+
+              <% instock_option_values(@product, option_type).each_with_index do |option_value, index| %>
+                <li>
+                  <%= radio_button_tag "option_types[#{option_type.id}]", option_value.id, (index < 1) %>
+                  <span class="variant-description">
+                    <%= option_value.presentation %>
+                  </span>
+                </li>
+              <% end %>
+              </li>
+            <% end %>
          <% end %>
         </ul>
       <% end %>
