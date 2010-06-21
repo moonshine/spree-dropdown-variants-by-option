@@ -22,5 +22,10 @@ class DropdownVariantsByOptionExtension < Spree::Extension
     # Add helper to construct options for variant dropdown
     ProductsHelper.send(:include, Spree::DropdownVariantsByOption::ProductsHelper)
 
+    # Add method to find a variant by it's option values
+    Variant.send(:include, Spree::DropdownVariantsByOption::Variant)
+
+    ProductsController.send(:include, Spree::DropdownVariantsByOption::ProductsController)
+
   end
 end
