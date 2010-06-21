@@ -1,4 +1,5 @@
   <% hook :dropdown_variants_by_option_cart_product do %>
+
     <% if product_price(@product) %>
       <% hook :product_price do %>
         <p class="prices">
@@ -13,14 +14,16 @@
   <% if @product.has_variants? %>
     <div id="product-variant-option-values">
       <% hook :dropdown_variants_by_option_cart_variants do %>
-        <h2><%= t('variants') %></h2>
-        <ul>
+        <h2><%= t('variants') %><%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %></h2>
+        <ul>          
           <% @product.option_types.each do |option_type| %>
             <li>
               <%= option_type.presentation %><br/>
               <% option_values = instock_option_values(@product, option_type) 
                 onchange = remote_function(
                         :with => 'Form.serialize(this.form)',
+                        :complete => "jQuery('#busy_indicator').hide();",
+                        :before => "jQuery('#busy_indicator').show();",
                         :url => { :action => 'option_value_changed', :id => @product})
               %>
               <% if option_values.empty? %>
