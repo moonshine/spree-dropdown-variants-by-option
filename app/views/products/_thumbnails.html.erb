@@ -26,15 +26,3 @@
       <% end %>
     </ul>
 <% end %>
-
-<% content_for :head do %>
-  <script type="text/javascript" charset="utf-8">
-    var images = new Array();
-    <% @variants.each do |v| %>
-      images[<%= v.id.to_s %>] = new Array();
-      <% v.images.each_with_index do |image, i| %>
-        images[<%= v.id.to_s %>][<%= i %>] = <%= link_to(image_tag(image.attachment.url(:mini)), image.attachment.url(:product)).to_json %>;
-      <% end %>
-    <% end %>
-  </script>
-<% end %>

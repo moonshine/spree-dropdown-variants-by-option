@@ -19,6 +19,7 @@ module Spree::DropdownVariantsByOption::ProductsController
       unless @selected_variant
         page.replace_html 'variant-images', :text => "#{t('out_of_stock')}"
       end
+      page << 'add_image_handlers();'
     end
   end
 
