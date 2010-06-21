@@ -11,10 +11,13 @@ module Spree::DropdownVariantsByOption::ProductsController
   # Show all variants on the products/index page
   def site_option_value_changed
     render :update do |page|
-      product = Product.find_by_permalink(params[:id])
-      variant = Variant.find_by_option_values(product.id, params[:option_values])
-      i = 1
-      #page.replace_html 'option_values_dropdown', :text => 'hello'
+      @product = Product.find_by_permalink(params[:id])
+      @selected_variant = Variant.find_by_option_values(@product.id, params[:option_values])
+        @variants = [@selected_variant]
+        page.replace_html 'thumbnails', :partial => 'thumbnails', :locals => {:product => @product}
+      unless @selected_variant
+        page.replace_html 'variant-images', :text => "#{t('out_of_stock')}"
+      end
     end
   end
 

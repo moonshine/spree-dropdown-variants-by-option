@@ -11,31 +11,33 @@
   <% end %>
 
   <% if @product.has_variants? %>
-    <div id="product-variant-values">
+    <div id="product-variant-option-values">
       <% hook :dropdown_variants_by_option_cart_variants do %>
         <h2><%= t('variants') %></h2>
         <ul>
-          <% selected_option_values = Array.new %>
           <% @product.option_types.each do |option_type| %>
             <li>
               <%= option_type.presentation %><br/>
-              <% option_values = instock_option_values(@product, option_type) %>
+              <% option_values = instock_option_values(@product, option_type) 
+                onchange = remote_function(
+                        :with => 'Form.serialize(this.form)',
+                        :url => { :action => 'option_value_changed', :id => @product})
+              %>
               <% if option_values.empty? %>
                 <%= t('out_of_stock') %>
               <% else %>
-                <% selected_option_values << option_values.first.id %>
                 <% if option_type.display_as_dropdown %>
                   <%= select_tag "option_values[#{option_type.id}]",
-                    options_from_collection_for_select(option_values, :id, :presentation, option_values.first.id), 
-                    {:id => :option_values_dropdown,
-                      :onchange => remote_function(
-                        :with => 'Form.serialize(this.form)',
-                        :url => { :action => 'option_value_changed', :id => @product})} %>
+                    options_from_collection_for_select(option_values, :id, :presentation, 
+                    @selected_variant ? @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id) : option_values.first.id),
+                    { :onchange => onchange } %>
                 <% else %>
                   <% option_values.each_with_index do |option_value, index| %>
                     <li>
                       <%= radio_button_tag "option_values[#{option_type.id}]", 
-                        option_value.id, option_value.id == option_values.first.id %>
+                        option_value.id, 
+                        @selected_variant ? option_value.id == @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id) : option_value.id == option_values.first.id,
+                        { :onchange => onchange } %>
                       <span class="variant-description">
                         <%= option_value.presentation %>
                       </span>
@@ -46,7 +48,6 @@
             </li>
           <% end %>
         </ul>
-        <%= hidden_field_tag :selected_variant_id, Variant.find_by_option_values(@product.id, selected_option_values).try(:id) %>
       <% end %>
     </div>
   <% end%>
