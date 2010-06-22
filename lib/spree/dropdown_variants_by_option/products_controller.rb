@@ -23,9 +23,13 @@ module Spree::DropdownVariantsByOption::ProductsController
         page.replace_html 'variant-images', :text => "#{t('out_of_stock')}"
         # Disable add to cart
         page << "$('#add_to_cart_submit').attr('disabled', true).unbind()"
+        # Change text on button
+        page << "$('#add_to_cart_submit').html('#{t('out_of_stock')}')"
       else
         # Enable add to cart
         page << "$('#add_to_cart_submit').removeAttr('disabled')"
+        # Display text on button
+        page << "$('#add_to_cart_submit').html('#{t('add_to_cart')}')"
       end
       # Reassign the image handlers after we replace the html above
       page << 'add_image_handlers();'
