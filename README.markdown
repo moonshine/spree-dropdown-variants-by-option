@@ -16,6 +16,9 @@ as well as the 'Add to Cart' button disabled if the item is out of stock or it d
 item exists and is in stock the show page will be updated to display the images assigned to the selected
 variant.
 
+Inspired and some code borrowed from the extension developed by Tim Case,
+see http://github.com/timcase/spree-dropdown-variants
+
 ## Usage
 
 ### Installation
@@ -32,4 +35,6 @@ using a dropdown.
 ## TODO list
 
 Tests
+
+
 
