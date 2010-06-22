@@ -13,6 +13,7 @@
   <% if @product.has_variants? %>
     <div id="product-variant-option-values">
       <% hook :dropdown_variants_by_option_cart_variants do %>
+        <%= hidden_field_tag 'product_id', @product.id %>
         <h2><%= t('variants') %><%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %></h2>
         <ul>          
           <% @product.option_types.each do |option_type| %>
@@ -60,7 +61,7 @@
       <%= text_field_tag (@product.has_variants? ? :quantity : "variants[#{@product.master.id}]"),
         1, :class => "title", :size => 3 %>
       &nbsp;
-      <button type='submit' class='large primary'>
+      <button type='submit' class='large primary' id='add_to_cart_submit'>
         <%= image_tag('/images/add-to-cart.png') + t('add_to_cart') %>
       </button>
     <% else %>

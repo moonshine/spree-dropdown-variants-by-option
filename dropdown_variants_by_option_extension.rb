@@ -25,7 +25,14 @@ class DropdownVariantsByOptionExtension < Spree::Extension
     # Add method to find a variant by it's option values
     Variant.send(:include, Spree::DropdownVariantsByOption::Variant)
 
+    # Add action to refresh image via ajax on change of option value
     ProductsController.send(:include, Spree::DropdownVariantsByOption::ProductsController)
+
+    # Add method to add a variant to the cart using the selected option values
+    OrdersController.send(:include, Spree::DropdownVariantsByOption::OrdersController)
+
+    # Add method to validate variant being added to cart
+    Order.send(:include, Spree::DropdownVariantsByOption::Order)
 
   end
 end

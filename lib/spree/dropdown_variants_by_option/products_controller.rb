@@ -11,14 +11,23 @@ module Spree::DropdownVariantsByOption::ProductsController
   # Show all variants on the products/index page
   def site_option_value_changed
     render :update do |page|
-      @product = Product.find_by_permalink(params[:id])
+      @product = Product.find(params[:product_id])
+      # Try and find the variant using the selected option values
       @selected_variant = Variant.find_by_option_values(@product.id, params[:option_values])
       @variants = Array.new
       @variants << @selected_variant if @selected_variant
+      # Refresh the thumbnails to show those for the selected variant
       page.replace_html 'thumbnails', :partial => 'thumbnails', :locals => {:product => @product}
-      unless @selected_variant
+      # Display out of stock message if no variant found
+      if !@selected_variant || !@selected_variant.available?
         page.replace_html 'variant-images', :text => "#{t('out_of_stock')}"
+        # Disable add to cart
+        page << "$('#add_to_cart_submit').attr('disabled', true).unbind()"
+      else
+        # Enable add to cart
+        page << "$('#add_to_cart_submit').removeAttr('disabled')"
       end
+      # Reassign the image handlers after we replace the html above
       page << 'add_image_handlers();'
     end
   end

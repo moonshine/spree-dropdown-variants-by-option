@@ -2,6 +2,7 @@ module Spree::DropdownVariantsByOption::Variant
 
   def self.included(target)
     target.class_eval do
+      # Try and find the variant from the supplied option values and product
       def self.find_by_option_values(product, option_values)
         join_clause = ''
         and_clause = ''
