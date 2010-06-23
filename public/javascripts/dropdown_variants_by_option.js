@@ -17,7 +17,23 @@ jQuery.fn.extend
         }
       )
       return this;
+    },
+
+    onChangeWithAjax: function()
+    {
+      this.change
+      (
+        function(e)
+        {
+          e.preventDefault();
+          $.post('/products/option_value_changed', $(this).serialize(), null, "script");
+          return false;
+        }
+      )
+      return this;
     }
+
+
   }
 );
 
@@ -43,6 +59,12 @@ var app =
   addToCart: function()
   {
     $("#cart_form").submitWithAjax();
+  },
+
+  optionValueChanged: function()
+  {
+    $("#option_values_select").onChangeWithAjax();
+    $("input#option_values_radio").onChangeWithAjax();
   }
 }
 
@@ -53,5 +75,7 @@ jQuery
     app.setupAjaxCallbacks();
 
     app.addToCart();
+
+    app.optionValueChanged();
   }
 );
