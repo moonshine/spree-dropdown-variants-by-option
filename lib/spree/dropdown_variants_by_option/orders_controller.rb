@@ -3,6 +3,7 @@ module Spree::DropdownVariantsByOption::OrdersController
   def self.included(target)
     target.class_eval do
       create.before << :add_variants_from_option_values
+      create.wants.js
     end
   end
 
