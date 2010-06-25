@@ -63,7 +63,7 @@ var app =
 
   optionValueChanged: function()
   {
-    $("#option_values_select").onChangeWithAjax();
+    $("select#option_values_select").onChangeWithAjax();
     $("input#option_values_radio").onChangeWithAjax();
   }
 }
