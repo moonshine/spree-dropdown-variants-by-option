@@ -1,6 +1,10 @@
 <% form_for :order, :url => orders_url, :html => {:id => 'cart_form'} do |f| %>
   <% hook :inside_product_cart_form do %>
 
+    <p>
+      <%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %>
+    </p>
+
     <% if product_price(@product) %>
       <% hook :product_price do %>
         <p class="prices">
@@ -15,11 +19,7 @@
       <div id="product-variant-option-values">
         <% hook :dropdown_variants_by_option_cart_variants do %>
           <%= hidden_field_tag 'product_id', @product.id %>
-          <h2>
-            <%= t('variants') %>
-            &nbsp;
-            <%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %>
-          </h2>
+          <h2><%= t('variants') %></h2>
           <ul>
             <% @product.option_types.each do |option_type| %>
               <li>

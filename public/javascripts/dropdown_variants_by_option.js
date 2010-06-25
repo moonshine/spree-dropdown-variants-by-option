@@ -26,7 +26,7 @@ jQuery.fn.extend
         function(e)
         {
           e.preventDefault();
-          $.post('/products/option_value_changed', $(this).serialize(), null, "script");
+          $.post('/products/option_value_changed', $("#cart_form").serialize(), null, "script");
           return false;
         }
       )
