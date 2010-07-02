@@ -1,3 +1,4 @@
+<% flash[:notice] = nil %>
 $("li.cart-indicator").html('<%= link_to_cart %>');
 alert('<%= t("item_added_to_cart") %>');
 
