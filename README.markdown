@@ -32,6 +32,15 @@ a new checkbox has been added to the option type maintenance form in the admin s
 "Display as a drop down selection" which when selected will cause the option values to be rendered
 using a dropdown.
 
+### Copy spree partial
+
+Due to clashes with other extensions I've had to modify the option_types edit form partial by adding
+in additional hooks. I've included the updated partial and it can be found in the root directory
+of this extension and is called _form.html.erb. You will need to copy it to this directory in your
+spree installation:
+
+vendor/extensions/theme_default/app/views/admin/option_types/_form.html.erb
+
 ## TODO list
 
 Tests
