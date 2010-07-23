@@ -34,5 +34,8 @@ class DropdownVariantsByOptionExtension < Spree::Extension
     # Add method to validate variant being added to cart
     Order.send(:include, Spree::DropdownVariantsByOption::Order)
 
+    # Add methods to retrieve primary/non-primary
+    OptionType.send(:include, Spree::DropdownVariantsByOption::OptionType)
+
   end
 end

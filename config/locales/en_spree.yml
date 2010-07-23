@@ -4,3 +4,4 @@ en:
   drag_to_reorder: "Drag to reorder"
   redirect_on_select: "Redirect when selection changed"
   item_added_to_cart: "Item added to Cart"
+  :primary_option_type: "Is this the primary option type"

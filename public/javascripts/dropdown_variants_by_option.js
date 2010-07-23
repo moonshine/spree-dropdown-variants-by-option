@@ -39,8 +39,8 @@ var app =
   },
 
   optionValueChanged: function() {
-    $("select#option_values_select").onChangeWithAjax();
-    $("input#option_values_radio").onChangeWithAjax();
+    $("select#option_values_select_primary").onChangeWithAjax();
+    $("input#option_values_radio_primary").onChangeWithAjax();
   }
 }
 

@@ -1,0 +1,34 @@
+<% if @selected_variant %>
+  <li>
+    <%= option_type.presentation %><br/>
+    <% option_values = instock_option_values(@selected_variant, option_type) %>
+    <% if option_values.empty? %>
+      <%= t('out_of_stock') %>
+    <% else %>
+      <% primary = "#{option_type.primary_option_type? ? '_primary' : ''}" %>
+      <% if option_type.display_as_dropdown %>
+        <%= select_tag "option_values#{primary}[#{option_type.id}]",
+          options_from_collection_for_select(option_values, :id, :presentation,
+          @selected_variant ? @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id) : option_values.first.id),
+          :id => "option_values_select#{primary}"
+        %>
+      <% else %>
+        <% option_values.each_with_index do |option_value, index| %>
+          <li>
+            <%= radio_button_tag "option_values#{primary}[#{option_type.id}]",
+              option_value.id,
+              @selected_variant ? option_value.id == @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id) : option_value.id == option_values.first.id,
+              :id => "option_values_radio#{primary}"
+            %>
+            <span class="variant-description">
+              <%= option_value.presentation %>
+            </span>
+          </li>
+        <% end %>
+      <% end %>
+    <% end %>
+  </li>
+<% else %>
+  <%= t('out_of_stock') %>
+<% end %>
+

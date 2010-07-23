@@ -13,7 +13,7 @@ module Spree::DropdownVariantsByOption::Variant
         Variant.find_by_sql("SELECT variants.* FROM variants #{join_clause}
           WHERE variants.deleted_at is null AND
           variants.product_id = #{product}
-          #{and_clause};").first
+          #{and_clause};")
       end
     end
   end
