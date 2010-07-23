@@ -9,7 +9,7 @@
       <% if option_type.display_as_dropdown %>
         <%= select_tag "option_values#{primary}[#{option_type.id}]",
           options_from_collection_for_select(option_values, :id, :presentation,
-          @selected_variant ? @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id) : option_values.first.id),
+          @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id)),
           :id => "option_values_select#{primary}"
         %>
       <% else %>
@@ -17,7 +17,7 @@
           <li>
             <%= radio_button_tag "option_values#{primary}[#{option_type.id}]",
               option_value.id,
-              @selected_variant ? option_value.id == @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id) : option_value.id == option_values.first.id,
+              option_value.id == @selected_variant.option_values.find_by_option_type_id(option_type.id).try(:id),
               :id => "option_values_radio#{primary}"
             %>
             <span class="variant-description">
