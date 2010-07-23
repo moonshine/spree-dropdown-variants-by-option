@@ -1,7 +1,11 @@
 <% if @selected_variant %>
   <li>
     <%= option_type.presentation %><br/>
-    <% option_values = instock_option_values(@selected_variant, option_type) %>
+    <%
+      # Make we have a non-master variant as the selected record
+      @selected_variant = @product.variants.detect {|v| v.available?} if @selected_variant.is_master?
+      option_values = instock_option_values(@selected_variant, option_type)
+    %>
     <% if option_values.empty? %>
       <%= t('out_of_stock') %>
     <% else %>

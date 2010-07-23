@@ -21,9 +21,8 @@
           <%= hidden_field_tag 'product_id', @product.id %>
           <h2><%= t('variants') %></h2>
           <ul>
-            <% primary_option_type = @product.option_types.primary.first %>
             <div id="primary_option_types">
-              <%= render :partial => 'option_type', :locals => {:option_type => primary_option_type} %>
+              <%= render :partial => 'option_type', :locals => {:option_type => @product.option_types.primary.first} %>
             </div>
             <div id="not_primary_option_types">
               <%= render :partial => 'option_type', :collection => @product.option_types.not_primary %>
