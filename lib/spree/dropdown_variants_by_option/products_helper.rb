@@ -23,7 +23,12 @@ module Spree::DropdownVariantsByOption::ProductsHelper
 
           # Check if the variants found are in stock, if so add the option value
           # as one of the values to display as a possible selection
-          instock = variants.detect { |v| v.available? }
+          # ** Problem when doing this as "Out of Stock" displayed for option
+          # so when "Add to Cart" it will not pass in this option value and it
+          # will find an instock product for the remaining option types **
+          #
+          #instock = variants.detect { |v| v.available? }
+          instock = variants.first
           option_values << option_value if instock
         end
         
