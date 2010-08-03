@@ -1,7 +1,6 @@
 $('div#thumbnails').html("<%= escape_javascript(render :partial => 'thumbnails', :locals => {:product => @product}) %>");
 $('div#not_primary_option_types').html("<%= escape_javascript(render :partial => 'option_type', :collection => @product.option_types.not_primary) %>");
 <% if !@selected_variant || !@selected_variant.available? %>
-  $('h4#variant-images').html('<%= "<h4>#{t('out_of_stock')}</h4>" %>');
   $('#add_to_cart_submit').attr('disabled', true).unbind();
   $('#add_to_cart_submit').html('<%= "#{t('out_of_stock')}" %>');
 <% else %>
